@@ -18,32 +18,50 @@ class _HomeScreenState extends State<HomeScreen> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: const Text("Users"),
       ),
-      body: ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, i) {
-            return Card(
-              child: Container(
-                height: 100,
-                width: 150,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.deepOrange,
-                      Colors.orangeAccent,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+      body: data.isNotEmpty
+          ? ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, i) {
+                return InkWell(
+                  onTap: () {},
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    height: 100,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      // color: Color(
+                      //         (math.Random().nextDouble() * 0xFFFFF).toInt())
+                      //     .withOpacity(1.0),
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xffcc2b5e),
+                          Color(0xff753a88),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        data[i].name.toString(),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ), //declare your widget here
                   ),
-                ),
-                child: Center(
-                  child: Text(data[i].name.toString()),
-                ), //declare your widget here
+                );
+              })
+          : const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 10,
+                color: Colors.deepOrange,
               ),
-            );
-          }),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

@@ -21,6 +21,10 @@ void main() async {
     value: StreamServiceClass().getUserData(),
     initialData: const <UserData>[],
     child: const MaterialApp(
+      // theme: ThemeData(
+      //     appBarTheme: const AppBarTheme(color: Colors.orange),
+      //     floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      //         backgroundColor: Colors.orange)),
       debugShowCheckedModeBanner: false,
       home: MyApp(),
     ),
