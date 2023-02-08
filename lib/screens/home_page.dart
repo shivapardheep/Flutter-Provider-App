@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_testapp/models/user.dart';
+import 'package:flutter_testapp/models/stream_data.dart';
+import 'package:flutter_testapp/providers/users_data_provider_future.dart';
+import 'package:flutter_testapp/screens/movies.dart';
 import 'package:flutter_testapp/screens/second_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -12,15 +14,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  Widget build(BuildContext context) {
-    List<UserData> data = Provider.of<List<UserData>>(context);
+  void initState() {
+    final userDataProvider =
+        Provider.of<UserDataProvider>(context, listen: false).getData();
+    super.initState();
+  }
 
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+  @override
+  Widget build(BuildContext context) {
+    List<StreamData> data = Provider.of<List<StreamData>>(context);
+    final userResponse = Provider.of<UserDataProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
+      drawer: Drawer(),
       appBar: AppBar(
-        title: const Text("Users"),
+        title: Text("User ${userResponse.userData.username}"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const MoviesScreen()));
+              },
+              icon: const Icon(
+                Icons.movie_filter,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: data.isNotEmpty
           ? ListView.builder(
@@ -33,9 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 100,
                     width: 150,
                     decoration: BoxDecoration(
-                      // color: Color(
-                      //         (math.Random().nextDouble() * 0xFFFFF).toInt())
-                      //     .withOpacity(1.0),
                       borderRadius: BorderRadius.circular(20),
                       gradient: const LinearGradient(
                         colors: [

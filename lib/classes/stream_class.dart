@@ -1,26 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_testapp/models/user.dart';
+import 'package:flutter_testapp/models/stream_data.dart';
 
 class StreamServiceClass {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Stream<List<UserData>> getUserData() {
+  Stream<List<StreamData>> getUserData() {
+    print("hi");
     return FirebaseFirestore.instance.collection("users").snapshots().map(
         (QuerySnapshot snapshot) => snapshot.docs
-            .map((doc) => UserData.fromJson(doc.data() as Map<String, dynamic>))
+            .map((doc) =>
+                StreamData.fromJson(doc.data() as Map<String, dynamic>))
             .toList());
-  }
-
-  Stream<List<UserData>> getUserData2() async* {
-    await Future.delayed(const Duration(seconds: 2));
-    // yield UserData2(name: "shiva pardheep", age: "20");
-    yield <UserData>[
-      UserData.fromJson({
-        "name": "Shiva",
-      }),
-      UserData.fromJson({
-        "name": "Nive",
-      })
-    ];
   }
 }

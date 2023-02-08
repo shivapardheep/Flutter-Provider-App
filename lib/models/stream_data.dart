@@ -1,16 +1,16 @@
-class UserData {
+class StreamData {
   String? name;
   String? email;
   int? phone;
   String? userid;
 
-  UserData(
+  StreamData(
       {required this.name,
       required this.email,
       required this.phone,
       required this.userid});
 
-  UserData.fromJson(Map<String, dynamic> json) {
+  StreamData.fromJson(Map<String, dynamic> json) {
     name = json['name'] ?? "";
     email = json['email'] ?? "";
     phone = json['phone'] ?? 0;
